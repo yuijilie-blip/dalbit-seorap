@@ -1,2 +1,2 @@
-# dalbit-seorap
+# index.html.
 Dalbit-seorap — Beauty Shop
