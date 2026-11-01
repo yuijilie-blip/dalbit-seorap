@@ -1,0 +1,473 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Dalbit Seorap</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: celular preto com navegador Onion; página parece a ficha de um app (voltar, ícone, botão, colunas de dados), seguida de uma vitrine suave em grade de 2 colunas e o contato no fim. Preto puro, rosa-claro e creme como detalhes. */
+:root {
+  --black: #000;
+  --card: #0d0d0d;
+  --line: #242424;
+  --text: #f1ece9;
+  --dim: #8b8785;
+  --pink: #f2a7b8;
+  --pink-soft: #f7d4dc;
+  --cream: #efe3cf;
+  --hand: "Gaegu", "Noto Sans KR", cursive;
+  --body: "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  background: #000; color: var(--text); font-family: var(--body); font-size: 14px; line-height: 1.5;
+  padding-block: 16px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.phone {
+  position: relative; width: 100%; max-width: 392px; height: 100%; max-height: 860px; margin: 0 auto;
+  display: flex; flex-direction: column; background: var(--black);
+  border: 8px solid #1a1a1a; border-radius: 34px; overflow: hidden;
+  box-shadow: 0 0 0 1px #2e2e2e, 0 0 50px rgba(242,167,184,.08);
+}
+@media (max-width: 440px) {
+  body { padding-block: 0; padding-left: 0; padding-right: 0; }
+  .phone { border: 0; border-radius: 0; max-height: none; box-shadow: none; }
+}
+
+.status { display: flex; justify-content: space-between; padding: 8px 18px 4px; font-size: 11px; color: var(--dim); font-variant-numeric: tabular-nums; }
+.browser { background: #0b0b0b; border-bottom: 1px solid var(--line); padding: 6px 12px 10px; }
+.tabs { display: flex; gap: 6px; align-items: center; margin-bottom: 8px; }
+.tab { flex: 1; min-width: 0; display: flex; align-items: center; gap: 6px; background: #000; border: 1px solid var(--line); border-radius: 10px 10px 0 0; padding: 5px 10px; font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tab i { width: 8px; height: 8px; border-radius: 50%; background: #9a6ae0; flex: none; }
+.tab-new { color: var(--dim); font-size: 16px; padding: 0 6px; }
+.url { display: flex; align-items: center; gap: 8px; background: #000; border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; min-width: 0; }
+.url span { font-size: 11px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.url b { color: var(--text); font-weight: 400; }
+
+.page { flex: 1; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #2a2a2a transparent; }
+
+.back { display: flex; align-items: center; gap: 4px; padding: 14px 14px 0; color: var(--dim); font-size: 15px; }
+.back svg { flex: none; }
+
+.listing { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 14px; padding: 14px 16px 0; align-items: start; }
+.icon {
+  width: 84px; height: 84px; border-radius: 20px; background: #111; border: 1px solid #2b2b2b;
+  display: grid; place-items: center; position: relative; overflow: hidden;
+}
+.listing h1 { margin: 2px 0 0; font: 700 28px/1.05 var(--hand); letter-spacing: .04em; }
+.listing .by { margin: 2px 0 10px; font-size: 12px; color: var(--dim); letter-spacing: .06em; text-transform: uppercase; }
+.enter { appearance: none; border: 0; background: #3a3a3a; color: #eee; font: 500 12px var(--body); letter-spacing: .08em; padding: 7px 22px; border-radius: 999px; cursor: pointer; }
+.enter:hover { background: var(--pink); color: #1a0e12; }
+
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 18px 0 0; padding: 12px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.fact { text-align: center; padding: 0 4px; border-left: 1px solid var(--line); min-width: 0; }
+.fact:first-child { border-left: 0; }
+.fact small { display: block; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: #5f5c5a; }
+.fact b { display: block; font: 700 19px/1.3 var(--hand); color: var(--dim); }
+.fact span { display: block; font-size: 10.5px; color: var(--dim); overflow-wrap: anywhere; }
+
+.hero { position: relative; margin: 16px 16px 0; padding: 24px 16px 22px; border: 1px solid var(--line); border-radius: 22px; background: radial-gradient(ellipse at 50% 0%, #1b1b1d 0%, #0a0a0a 70%); text-align: center; overflow: hidden; }
+.hero .logo { margin: 8px 0 0; font: 700 40px/1.05 var(--hand); letter-spacing: .08em; }
+.hero .sub { margin: 4px 0 10px; font: 400 18px var(--hand); color: var(--pink-soft); letter-spacing: .12em; }
+.hero p { margin: 0; font-size: 12px; color: var(--dim); text-wrap: balance; }
+.spark { position: absolute; fill: #f4efe9; opacity: .8; }
+.cloud { position: absolute; fill: none; stroke: #8b8785; stroke-width: 1.2; opacity: .5; }
+
+.chips { display: flex; gap: 8px; overflow-x: auto; padding: 18px 16px 4px; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chip { flex: none; appearance: none; background: transparent; border: 1px solid #2c2c2c; color: var(--dim); font: 400 12px var(--body); padding: 5px 14px; border-radius: 999px; cursor: pointer; }
+.chip.on { border-color: var(--pink); color: var(--pink-soft); }
+button:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
+
+.sec { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 20px 16px 10px; }
+.sec h2 { margin: 0; font: 700 24px var(--hand); letter-spacing: .04em; }
+.sec span { font-size: 11px; color: var(--dim); }
+
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 10px; padding: 0 16px 8px; }
+.card { display: flex; flex-direction: column; min-width: 0; }
+.photo { aspect-ratio: 1 / 1.1; border-radius: 16px; overflow: hidden; background: #e6dfda; }
+.photo svg { display: block; width: 100%; height: 100%; }
+.info { padding: 8px 2px 0; display: flex; flex-direction: column; gap: 1px; flex: 1; }
+.info h3 { margin: 0; font: 700 20px/1.1 var(--hand); letter-spacing: .02em; }
+.pt { font-size: 11.5px; color: var(--text); line-height: 1.3; }
+.size { font-size: 10.5px; color: var(--dim); }
+.price { margin-top: auto; padding-top: 6px; font: 500 15px var(--body); color: var(--pink-soft); font-variant-numeric: tabular-nums; }
+.btn { margin-top: 6px; appearance: none; width: 100%; border: 1px solid var(--pink); background: transparent; color: var(--pink-soft); font: 400 12px var(--body); padding: 6px 8px; border-radius: 999px; cursor: pointer; }
+.btn:hover, .btn.added { background: var(--pink); color: #1a0e12; }
+
+.end { margin: 28px 16px 0; padding: 30px 18px 40px; border-top: 1px solid var(--line); text-align: center; }
+.end svg { width: 18px; height: 18px; fill: var(--pink-soft); margin-bottom: 10px; }
+.end p { margin: 0 0 10px; font: 400 21px/1.35 var(--hand); color: var(--text); text-wrap: balance; }
+.mail { font: 500 15px var(--body); color: var(--pink-soft); letter-spacing: .02em; user-select: all; overflow-wrap: anywhere; }
+
+.cartbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #0b0b0b; border-top: 1px solid var(--line); padding: 10px 14px; }
+.cartbar .sum { font-size: 11px; color: var(--dim); min-width: 0; }
+.cartbar .sum b { display: block; font: 500 16px var(--body); color: var(--text); font-variant-numeric: tabular-nums; }
+.checkout { appearance: none; border: 0; background: var(--pink); color: #1a0e12; font: 500 13px var(--body); padding: 9px 16px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+.checkout[disabled] { background: #262626; color: #6b6867; cursor: default; }
+.sheet { position: absolute; inset: 0; background: #000; z-index: 5; display: flex; flex-direction: column; }
+.sheet-card { flex: 1; overflow-y: auto; padding: 14px 18px 28px; scrollbar-width: thin; scrollbar-color: #2a2a2a transparent; }
+.sheet .back { padding: 0 0 12px; cursor: pointer; appearance: none; background: none; border: 0; font-family: var(--body); }
+.sheet-card h2 { font: 700 30px/1.1 var(--hand); margin: 0 0 6px; }
+.sheet-card .lead { margin: 0 0 14px; color: var(--dim); font-size: 13px; }
+.contact { border: 1px solid #2e2e2e; border-radius: 16px; padding: 16px; text-align: center; background: radial-gradient(ellipse at 50% 0%, #1a1a1c, #0a0a0a 75%); }
+.contact small { display: block; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #6b6867; margin-bottom: 4px; }
+.contact .mail { font-size: 16px; }
+.copy { margin-top: 12px; appearance: none; border: 0; background: var(--pink); color: #1a0e12; font: 500 13px var(--body); padding: 9px 20px; border-radius: 999px; cursor: pointer; }
+.sheet-card h3 { margin: 22px 0 6px; font: 700 22px var(--hand); }
+.order { border-top: 1px solid #242424; }
+.oi { padding: 11px 0; border-bottom: 1px solid #242424; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; }
+.oi b { font: 700 19px/1.1 var(--hand); }
+.oi .amt { font-variant-numeric: tabular-nums; color: var(--pink-soft); font-size: 13px; white-space: nowrap; text-align: right; }
+.oi .d { grid-column: 1 / -1; font-size: 11.5px; color: var(--dim); }
+.total { display: flex; justify-content: space-between; padding-top: 12px; font: 700 22px var(--hand); }
+.total span:last-child { font-variant-numeric: tabular-nums; color: var(--pink-soft); }
+.hint { margin: 14px 0 0; font-size: 11.5px; color: var(--dim); text-align: center; }
+.fiction { font-size: 10px; color: #5a5755; text-align: center; margin-top: 18px; }
+</style>
+
+<div class="phone">
+  <div class="status"><span>02:47</span><span>4G ▮▮▮▯ 61%</span></div>
+
+  <div class="browser">
+    <div class="tabs">
+      <div class="tab"><i></i>달빛 서랍 상점</div>
+      <div class="tab-new">+</div>
+    </div>
+    <div class="url">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9a6ae0" stroke-width="2" aria-hidden="true"><circle cx="12" cy="13" r="7"/><path d="M12 6V3M9 5l-1-2M15 5l1-2"/></svg>
+      <span><b>dalbitseorap4k7mhana2q</b>.onion</span>
+    </div>
+  </div>
+
+  <div class="page" id="page">
+    <div class="back">
+      <svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="#8b8785" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2L2 10l8 8"/></svg>
+      Buscar
+    </div>
+
+    <header class="listing">
+      <div class="icon" aria-hidden="true">
+        <svg viewBox="0 0 84 84" width="84" height="84">
+          <defs><radialGradient id="ic" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#cfc6b4"/></radialGradient></defs>
+          <circle cx="42" cy="40" r="22" fill="url(#ic)"/>
+          <circle cx="50" cy="34" r="19" fill="#111"/>
+          <path d="M16 62c4-6 10-6 14-2 3-5 11-5 14 0 5-3 12-1 14 4H16z" fill="none" stroke="#8b8785" stroke-width="1.4"/>
+        </svg>
+      </div>
+      <div style="min-width:0">
+        <h1>달빛 서랍</h1>
+        <p class="by">달빛 서랍 상점</p>
+        <button class="enter" type="button" id="enter">ENTRAR</button>
+      </div>
+    </header>
+
+    <div class="facts">
+      <div class="fact"><small>Idade</small><b>18+</b><span>anos</span></div>
+      <div class="fact"><small>Categoria</small><b>美</b><span>Beleza</span></div>
+      <div class="fact"><small>Vendedora</small><b>Hana</b><span>하나</span></div>
+      <div class="fact"><small>Idioma</small><b>KO</b><span>Coreano</span></div>
+    </div>
+
+    <section class="hero">
+      <svg class="cloud" style="left:10px;top:12px" width="60" height="26" viewBox="0 0 60 26" aria-hidden="true"><path d="M8 22a7 7 0 0 1 2-13 10 10 0 0 1 19-2 8 8 0 0 1 14 3 6 6 0 0 1 8 12z"/></svg>
+      <svg class="cloud" style="right:10px;top:40px" width="48" height="22" viewBox="0 0 60 26" aria-hidden="true"><path d="M8 22a7 7 0 0 1 2-13 10 10 0 0 1 19-2 8 8 0 0 1 14 3 6 6 0 0 1 8 12z"/></svg>
+      <svg class="spark" style="right:22px;top:12px" width="16" height="16" viewBox="-9 -9 18 18" aria-hidden="true"><path d="M0-8C1-2 2-1 8 0 2 1 1 2 0 8-1 2-2 1-8 0-2-1-1-2 0-8z"/></svg>
+      <svg class="spark" style="left:26px;bottom:20px" width="11" height="11" viewBox="-9 -9 18 18" aria-hidden="true"><path d="M0-8C1-2 2-1 8 0 2 1 1 2 0 8-1 2-2 1-8 0-2-1-1-2 0-8z"/></svg>
+      <svg class="spark" style="right:44px;bottom:26px" width="9" height="9" viewBox="-9 -9 18 18" aria-hidden="true"><path d="M0-8C1-2 2-1 8 0 2 1 1 2 0 8-1 2-2 1-8 0-2-1-1-2 0-8z"/></svg>
+      <div class="logo">달빛 서랍</div>
+      <div class="sub">달빛 마켓</div>
+      <p>밤에만 열리는 아름다움의 서랍<br>Uma gaveta de beleza que só abre à noite.</p>
+    </section>
+
+    <div class="chips" id="chips"></div>
+
+    <div class="sec"><h2>Coleção da noite</h2><span id="count"></span></div>
+    <div class="grid" id="grid"></div>
+
+    <section class="end">
+      <svg viewBox="-9 -9 18 18" aria-hidden="true"><path d="M0-8C1-2 2-1 8 0 2 1 1 2 0 8-1 2-2 1-8 0-2-1-1-2 0-8z"/></svg>
+      <p>A sessão termina por aqui, você sabe o que veio buscar. Entre em contato:</p>
+      <div class="mail">saekhana@protonmail.com</div>
+    </section>
+  </div>
+
+  <div class="cartbar">
+    <div class="sum">carrinho<b id="total">₩0</b></div>
+    <button class="checkout" id="checkout" type="button" disabled>Finalizar (0)</button>
+  </div>
+
+  <div class="sheet" id="sheet" hidden>
+    <div class="sheet-card">
+      <button class="back" id="close" type="button">
+        <svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="#8b8785" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2L2 10l8 8"/></svg>
+        Voltar
+      </button>
+      <h2>Finalize por e-mail</h2>
+      <p class="lead">Não fechamos pedidos aqui. Para concluir a compra, entre em contato pelo Proton Mail e envie as informações do pedido abaixo.</p>
+      <div class="contact">
+        <small>Proton Mail</small>
+        <div class="mail">saekhana@protonmail.com</div>
+        <button class="copy" id="copy" type="button">Copiar pedido</button>
+      </div>
+      <h3>Informações do pedido</h3>
+      <div class="order" id="lines"></div>
+      <div class="total"><span>Total</span><span id="sheet-total"></span></div>
+      <p class="hint">Cole o pedido copiado no corpo do e-mail e aguarde a resposta.</p>
+      <div class="fiction">Loja fictícia criada para o RPG.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* Produtos desenhados em SVG sobre fundo claro de estúdio, com vidro fosco, tampas brancas e luz suave. As marcas e rótulos são inventados. */
+function lg(id, name, stops) {
+  return '<linearGradient id="' + name + id + '" x1="0" y1="0" x2="1" y2="0">' + stops.map(function (s) {
+    return '<stop offset="' + s[0] + '" stop-color="' + s[1] + '"/>';
+  }).join('') + '</linearGradient>';
+}
+var FONT = "Gaegu, Noto Sans KR, sans-serif";
+function stage(id, body) {
+  return '<svg viewBox="0 0 120 132" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>' +
+    '<radialGradient id="bg' + id + '" cx="50%" cy="30%" r="80%"><stop offset="0" stop-color="#f8f4f1"/><stop offset="1" stop-color="#d9d0cb"/></radialGradient>' +
+    '<linearGradient id="fl' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ece5e0"/><stop offset="1" stop-color="#cfc6c0"/></linearGradient>' +
+    '<filter id="bl' + id + '" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="2.4"/></filter>' +
+    lg(id, 'gp', [[0, '#e3a0b3'], [.25, '#f6ccd7'], [.55, '#fbdfe6'], [.85, '#e9adbd'], [1, '#d58fa4']]) +
+    lg(id, 'gw', [[0, '#cbc6c3'], [.3, '#ffffff'], [.7, '#efedea'], [1, '#b9b4b0']]) +
+    lg(id, 'ga', [[0, '#c4964a'], [.3, '#f0d391'], [.6, '#f7e6b8'], [1, '#bd8f46']]) +
+    lg(id, 'gb', [[0, '#22140c'], [.3, '#6b4630'], [.7, '#4a2e1e'], [1, '#180d08']]) +
+    lg(id, 'ge', [[0, '#9a9176'], [.3, '#d6cdb3'], [.7, '#bfb59a'], [1, '#887f66']]) +
+    lg(id, 'gl', [[0, '#86a1ba'], [.3, '#d6e3ee'], [.7, '#b9cddd'], [1, '#7690a9']]) +
+    lg(id, 'gr', [[0, '#741820'], [.3, '#d2444e'], [.7, '#b22832'], [1, '#601017']]) +
+    lg(id, 'gm', [[0, '#cbc9c6'], [.3, '#fcfbf9'], [.7, '#e8e6e3'], [1, '#c2bfbb']]) +
+    '</defs><rect width="120" height="132" fill="url(#bg' + id + ')"/>' +
+    '<rect y="100" width="120" height="32" fill="url(#fl' + id + ')"/>' +
+    '<ellipse cx="60" cy="101" rx="32" ry="4.5" fill="#4a3a33" opacity=".38" filter="url(#bl' + id + ')"/>' +
+    body + '</svg>';
+}
+function hl(x, y, h) { return '<rect x="' + x + '" y="' + y + '" width="3.2" height="' + h + '" rx="1.6" fill="#fff" opacity=".55"/>'; }
+function lab(x, y, w, h, t1, t2, col) {
+  return '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="1.5" fill="#fbf8f3"/>' +
+    '<text x="' + (x + w / 2) + '" y="' + (y + h / 2 + (t2 ? -1 : 2.5)) + '" text-anchor="middle" font-family="' + FONT + '" font-size="7.5" font-weight="700" fill="' + (col || '#2a2220') + '">' + t1 + '</text>' +
+    (t2 ? '<text x="' + (x + w / 2) + '" y="' + (y + h / 2 + 6) + '" text-anchor="middle" font-family="' + FONT + '" font-size="4.6" fill="#7a706a">' + t2 + '</text>' : '');
+}
+var berry = function (cx, cy, s) {
+  return '<g transform="translate(' + cx + ' ' + cy + ') scale(' + s + ')"><path d="M0 8C-7 6-8-3-4-6 0-8 4-8 6-5 9-1 5 6 0 8z" fill="#d2303c"/><path d="M-3-6l3 2 3-2-1-3-2 1-2-1z" fill="#3f8a4b"/><circle cx="-2" cy="0" r=".7" fill="#f7d0d4"/><circle cx="2" cy="1" r=".7" fill="#f7d0d4"/><circle cx="0" cy="4" r=".7" fill="#f7d0d4"/></g>';
+};
+var art = {
+  peach: function (i) { return stage(i,
+    '<rect x="53" y="14" width="14" height="22" rx="7" fill="url(#gw' + i + ')"/>' +
+    '<rect x="48" y="34" width="24" height="14" rx="3" fill="url(#gw' + i + ')"/>' +
+    '<rect x="38" y="46" width="44" height="54" rx="9" fill="url(#gp' + i + ')"/>' + hl(43, 52, 42) +
+    '<text x="60" y="68" text-anchor="middle" font-family="' + FONT + '" font-size="15" font-weight="700" fill="#fff" opacity=".95">P5</text>' +
+    '<text x="60" y="80" text-anchor="middle" font-family="' + FONT + '" font-size="5" fill="#fff">복숭아 세럼</text>' +
+    '<text x="60" y="92" text-anchor="middle" font-family="' + FONT + '" font-size="3.8" fill="#fff" opacity=".85">DALBIT · 30ml</text>'); },
+  strawlotion: function (i) { return stage(i,
+    '<path d="M50 52h20l16 46q1 3-3 3H37q-4 0-3-3z" fill="url(#gp' + i + ')"/>' + hl(44, 60, 30) +
+    '<rect x="50" y="42" width="20" height="12" rx="2" fill="url(#gr' + i + ')"/>' +
+    '<rect x="57" y="30" width="6" height="13" fill="url(#gw' + i + ')"/>' +
+    '<path d="M46 24q10-6 28-3 3 1 1 4-1 3-5 3H52q-6 0-6-4z" fill="url(#gr' + i + ')"/>' +
+    '<path d="M42 72q18-6 36 0l3 22q-21 6-42 0z" fill="#fff"/>' + berry(48, 84, .9) +
+    '<text x="66" y="82" text-anchor="middle" font-family="' + FONT + '" font-size="8" font-weight="700" fill="#c23642">딸기우유</text>' +
+    '<text x="66" y="90" text-anchor="middle" font-family="' + FONT + '" font-size="4" fill="#6a5a5c">body lotion</text>'); },
+  strawfoam: function (i) { return stage(i,
+    '<rect x="42" y="22" width="36" height="64" rx="7" fill="url(#gp' + i + ')"/>' + hl(46, 28, 52) +
+    '<path d="M44 40q16-6 32 0v22q-16 6-32 0z" fill="#fff"/>' +
+    '<text x="60" y="52" text-anchor="middle" font-family="' + FONT + '" font-size="8.5" font-weight="700" fill="#c23642">딸기우유</text>' +
+    '<text x="60" y="59" text-anchor="middle" font-family="' + FONT + '" font-size="3.8" fill="#6a5a5c">cleansing foam</text>' +
+    berry(60, 74, 1.1) +
+    '<rect x="46" y="86" width="28" height="14" rx="3" fill="url(#gr' + i + ')"/>'); },
+  balm: function (i) { return stage(i,
+    '<rect x="26" y="54" width="68" height="46" rx="13" fill="url(#gp' + i + ')"/>' + hl(32, 62, 30) +
+    '<rect x="24" y="38" width="72" height="18" rx="6" fill="url(#gw' + i + ')"/>' +
+    '<text x="60" y="78" text-anchor="middle" font-family="' + FONT + '" font-size="14" font-weight="700" fill="#fff">balm</text>' +
+    '<text x="60" y="90" text-anchor="middle" font-family="' + FONT + '" font-size="4.6" fill="#fff">클렌징 밤 · 100ml</text>'); },
+  riceessence: function (i) { return stage(i,
+    '<rect x="55" y="16" width="10" height="22" rx="5" fill="url(#gw' + i + ')"/>' +
+    '<rect x="49" y="34" width="22" height="14" rx="2" fill="url(#gw' + i + ')"/>' +
+    '<rect x="40" y="46" width="40" height="54" rx="9" fill="url(#ga' + i + ')"/>' + hl(44, 52, 42) +
+    lab(46, 62, 28, 28, '쌀 에센스', 'RICE ESSENCE', '#2a2220')); },
+  ricetoner: function (i) { return stage(i,
+    '<rect x="46" y="16" width="28" height="22" rx="3" fill="url(#gw' + i + ')"/>' +
+    '<rect x="40" y="36" width="40" height="64" rx="7" fill="url(#gm' + i + ')"/>' + hl(44, 42, 52) +
+    lab(46, 56, 28, 30, '쌀 토너', 'RICE MILK', '#2a2220')); },
+  ricemask: function (i) { return stage(i,
+    '<rect x="28" y="54" width="64" height="46" rx="14" fill="url(#ge' + i + ')"/>' + hl(33, 62, 30) +
+    '<rect x="30" y="42" width="60" height="14" rx="4" fill="url(#gw' + i + ')"/>' +
+    lab(36, 64, 48, 26, '쌀꿀 마스크', 'RICE & HONEY MASK', '#2a2220')); },
+  birchsun: function (i) { return stage(i,
+    '<rect x="40" y="16" width="40" height="68" rx="8" fill="url(#gw' + i + ')"/>' +
+    '<path d="M40 54h40v22a8 8 0 0 1-8 8H48a8 8 0 0 1-8-8z" fill="#2f5fb0"/>' +
+    '<path d="M52 16v38M60 16v38M68 16v38" stroke="#d8d2cd" stroke-width="1.2" opacity=".7"/>' +
+    '<text x="60" y="38" text-anchor="middle" font-family="' + FONT + '" font-size="8" font-weight="700" fill="#2a2a44">자작나무</text>' +
+    '<text x="60" y="46" text-anchor="middle" font-family="' + FONT + '" font-size="4" fill="#6a6a80">SUN CREAM</text>' +
+    '<text x="60" y="68" text-anchor="middle" font-family="' + FONT + '" font-size="5.5" fill="#fff">SPF 50+ PA++++</text>' +
+    '<rect x="46" y="84" width="28" height="16" rx="3" fill="url(#gw' + i + ')"/>'); },
+  sunessence: function (i) { return stage(i,
+    '<rect x="50" y="14" width="20" height="14" rx="3" fill="url(#gl' + i + ')"/>' +
+    '<rect x="48" y="26" width="24" height="74" rx="4" fill="url(#gl' + i + ')"/>' + hl(51, 30, 64) +
+    '<rect x="50" y="52" width="20" height="30" rx="1.5" fill="#fbf8f3"/>' +
+    '<text x="60" y="64" text-anchor="middle" font-family="' + FONT + '" font-size="5.5" font-weight="700" fill="#2a2a44">SUN</text>' +
+    '<text x="60" y="72" text-anchor="middle" font-family="' + FONT + '" font-size="4" fill="#6a6a80">essence</text>' +
+    '<text x="60" y="79" text-anchor="middle" font-family="' + FONT + '" font-size="5" fill="#2a2a44">50+</text>'); },
+  cleansingoil: function (i) { return stage(i,
+    '<rect x="26" y="26" width="34" height="11" rx="3" fill="url(#gw' + i + ')"/>' +
+    '<rect x="50" y="32" width="10" height="16" fill="url(#gw' + i + ')"/>' +
+    '<rect x="32" y="46" width="48" height="54" rx="9" fill="url(#ga' + i + ')"/>' + hl(36, 52, 42) +
+    lab(38, 62, 36, 28, '클렌징 오일', 'LIGHT OIL', '#2a2220')); },
+  ampoule: function (i) { return stage(i,
+    '<rect x="54" y="14" width="12" height="22" rx="6" fill="#141010"/>' +
+    '<rect x="50" y="34" width="20" height="12" rx="2" fill="url(#ge' + i + ')"/>' +
+    '<rect x="40" y="46" width="40" height="54" rx="8" fill="url(#gb' + i + ')"/>' + hl(44, 52, 42) +
+    lab(46, 62, 28, 28, '진정 앰플', 'CALM AMPOULE', '#2a2220')); },
+  set: function (i) { return stage(i,
+    '<rect x="10" y="14" width="100" height="88" rx="4" fill="#e9d4d1"/>' +
+    '<rect x="14" y="18" width="92" height="80" rx="3" fill="#f3e4e1"/>' +
+    '<circle cx="38" cy="42" r="17" fill="#f3ead6"/><circle cx="38" cy="42" r="14" fill="none" stroke="#e1d4b6" stroke-width="1.4" stroke-dasharray="2 2"/>' +
+    '<g transform="rotate(-8 30 78)"><rect x="20" y="58" width="22" height="34" rx="5" fill="#eadbc6"/><rect x="20" y="86" width="22" height="8" rx="2" fill="#aebfd2"/></g>' +
+    '<circle cx="70" cy="62" r="9" fill="#efe9de"/><circle cx="70" cy="62" r="4" fill="#cfc4ab"/>' +
+    '<circle cx="90" cy="48" r="9" fill="#f8f5f0"/><circle cx="90" cy="48" r="5" fill="#ece8e1"/>' +
+    '<rect x="64" y="78" width="38" height="16" rx="8" fill="#d8cdb3"/><rect x="66" y="80" width="14" height="12" rx="6" fill="#f8f5f0"/>' +
+    '<text x="86" y="26" text-anchor="middle" font-family="' + FONT + '" font-size="7" fill="#8a6a6a" letter-spacing=".5">달빛 세트</text>'); }
+};
+
+art.eyecream = function (i) { return stage(i,
+  '<rect x="52" y="20" width="16" height="7" rx="1.5" fill="#2a1a12"/>' +
+  '<rect x="50" y="26" width="20" height="62" rx="4" fill="url(#gb' + i + ')"/>' + hl(53, 32, 50) +
+  '<rect x="52" y="44" width="16" height="30" rx="1.5" fill="#fbf8f3"/>' +
+  '<text x="60" y="56" text-anchor="middle" font-family="' + FONT + '" font-size="5.6" font-weight="700" fill="#2a2220">아이크림</text>' +
+  '<text x="60" y="64" text-anchor="middle" font-family="' + FONT + '" font-size="3.6" fill="#7a706a">EYE CREAM</text>' +
+  '<rect x="48" y="86" width="24" height="14" rx="3" fill="#1c1210"/>'); };
+art.sunstick = function (i) { return stage(i,
+  '<rect x="42" y="18" width="36" height="20" rx="5" fill="url(#gw' + i + ')"/>' +
+  '<rect x="42" y="36" width="36" height="64" rx="7" fill="url(#gl' + i + ')"/>' + hl(46, 42, 52) +
+  '<rect x="46" y="52" width="28" height="30" rx="1.5" fill="#fbf8f3"/>' +
+  '<text x="60" y="64" text-anchor="middle" font-family="' + FONT + '" font-size="7.5" font-weight="700" fill="#2a2a44">선 스틱</text>' +
+  '<text x="60" y="73" text-anchor="middle" font-family="' + FONT + '" font-size="4" fill="#6a6a80">SUN STICK</text>' +
+  '<text x="60" y="79" text-anchor="middle" font-family="' + FONT + '" font-size="4" fill="#6a6a80">SPF 50+</text>'); };
+art.peeling = function (i) { return stage(i,
+  '<rect x="42" y="20" width="36" height="68" rx="8" fill="url(#gp' + i + ')"/>' + hl(46, 26, 54) +
+  '<path d="M44 44q16-6 32 0v24q-16 6-32 0z" fill="#fff"/>' +
+  '<text x="60" y="56" text-anchor="middle" font-family="' + FONT + '" font-size="9" font-weight="700" fill="#b8566a">필링 젤</text>' +
+  '<text x="60" y="64" text-anchor="middle" font-family="' + FONT + '" font-size="3.8" fill="#7a6a6c">peeling gel</text>' +
+  '<rect x="48" y="86" width="24" height="14" rx="3" fill="url(#gw' + i + ')"/>'); };
+art.moistcream = function (i) { return stage(i,
+  '<rect x="28" y="56" width="64" height="44" rx="12" fill="url(#gm' + i + ')"/>' + hl(34, 64, 28) +
+  '<rect x="26" y="42" width="68" height="16" rx="5" fill="url(#gp' + i + ')"/>' +
+  '<text x="60" y="76" text-anchor="middle" font-family="' + FONT + '" font-size="10" font-weight="700" fill="#3a302c">수분 크림</text>' +
+  '<text x="60" y="88" text-anchor="middle" font-family="' + FONT + '" font-size="4.4" fill="#7a706a">PETAL MOIST CREAM · 60ml</text>'); };
+art.lintint = function (i) { return stage(i,
+  '<rect x="50" y="18" width="20" height="26" rx="5" fill="url(#gw' + i + ')"/>' +
+  '<rect x="49" y="42" width="22" height="58" rx="5" fill="url(#gr' + i + ')"/>' + hl(52, 48, 46) +
+  '<text x="60" y="68" text-anchor="middle" font-family="' + FONT + '" font-size="6.4" font-weight="700" fill="#fff">립 틴트</text>' +
+  '<text x="60" y="76" text-anchor="middle" font-family="' + FONT + '" font-size="3.4" fill="#f7d4dc">CHERRY TINT</text>'); };
+art.handcream = function (i) { return stage(i,
+  '<rect x="44" y="26" width="32" height="62" rx="7" fill="url(#gm' + i + ')"/>' + hl(47, 32, 50) +
+  '<path d="M44 66h32v14q-16 6-32 0z" fill="#e8a6b7"/>' +
+  '<text x="60" y="48" text-anchor="middle" font-family="' + FONT + '" font-size="8" font-weight="700" fill="#3a302c">핸드크림</text>' +
+  '<text x="60" y="56" text-anchor="middle" font-family="' + FONT + '" font-size="4" fill="#7a706a">CAMELLIA HAND</text>' +
+  '<rect x="48" y="88" width="24" height="12" rx="3" fill="url(#gp' + i + ')"/>'); };
+
+var items = [
+  { id: "peach", cat: "Séruns", kr: "복숭아 세럼", pt: "Sérum de Pêssego Fosco", size: "30 ml", price: 1380000 },
+  { id: "strawlotion", cat: "Corpo", kr: "딸기우유 로션", pt: "Loção de Leite de Morango", size: "500 ml", price: 780000 },
+  { id: "strawfoam", cat: "Limpeza", kr: "딸기우유 폼", pt: "Espuma de Limpeza de Morango", size: "120 ml", price: 560000 },
+  { id: "balm", cat: "Limpeza", kr: "클렌징 밤", pt: "Bálsamo de Limpeza Rosa", size: "100 ml", price: 1120000 },
+  { id: "riceessence", cat: "Séruns", kr: "쌀 에센스", pt: "Essência de Arroz Dourada", size: "30 ml", price: 1640000 },
+  { id: "ricetoner", cat: "Tônicos", kr: "쌀 토너", pt: "Tônico de Leite de Arroz", size: "150 ml", price: 920000 },
+  { id: "ricemask", cat: "Máscaras", kr: "쌀꿀 마스크", pt: "Máscara de Arroz e Mel", size: "150 ml", price: 1950000 },
+  { id: "birchsun", cat: "Solar", kr: "자작나무 선크림", pt: "Protetor Solar de Bétula", size: "50 ml", price: 640000 },
+  { id: "sunessence", cat: "Solar", kr: "선 에센스", pt: "Essência Solar Leve", size: "40 ml", price: 720000 },
+  { id: "cleansingoil", cat: "Limpeza", kr: "클렌징 오일", pt: "Óleo de Limpeza Leve", size: "200 ml", price: 860000 },
+  { id: "ampoule", cat: "Séruns", kr: "진정 앰플", pt: "Ampola Calmante Escura", size: "50 ml", price: 2480000 },
+  { id: "eyecream", cat: "Cremes", kr: "아이크림", pt: "Creme para Olhos Escuro", size: "20 ml", price: 1760000 },
+  { id: "moistcream", cat: "Cremes", kr: "수분 크림", pt: "Creme Hidratante de Pétala", size: "60 ml", price: 1290000 },
+  { id: "sunstick", cat: "Solar", kr: "선 스틱", pt: "Bastão Solar Azul", size: "18 g", price: 590000 },
+  { id: "peeling", cat: "Limpeza", kr: "필링 젤", pt: "Gel Esfoliante de Damasco", size: "100 ml", price: 480000 },
+  { id: "lintint", cat: "Lábios", kr: "립 틴트", pt: "Tinta Labial de Cereja", size: "4 g", price: 390000 },
+  { id: "handcream", cat: "Corpo", kr: "핸드크림", pt: "Creme de Mãos de Camélia", size: "50 ml", price: 350000 },
+  { id: "set", cat: "Sets", kr: "달빛 세트", pt: "Caixa Presente da Noite", size: "5 itens", price: 3900000 }
+];
+items.forEach(function (it, n) { it.code = "DS-" + (101 + n); });
+var cats = ["Todos", "Séruns", "Tônicos", "Cremes", "Limpeza", "Solar", "Corpo", "Máscaras", "Lábios", "Sets"];
+var state = { cat: "Todos" };
+var cart = {};
+
+function won(n) { return "₩" + n.toLocaleString("ko-KR"); }
+
+function renderChips() {
+  document.getElementById("chips").innerHTML = cats.map(function (c) {
+    return '<button type="button" class="chip' + (c === state.cat ? ' on' : '') + '" data-cat="' + c + '">' + c + '</button>';
+  }).join("");
+}
+function renderGrid() {
+  var shown = items.filter(function (it) { return state.cat === "Todos" || it.cat === state.cat; });
+  document.getElementById("count").textContent = shown.length + (shown.length === 1 ? " item" : " itens");
+  document.getElementById("grid").innerHTML = shown.map(function (it) {
+    return '<article class="card"><div class="photo">' + art[it.id](it.id) + '</div>' +
+      '<div class="info"><h3>' + it.kr + '</h3><div class="pt">' + it.pt + '</div><div class="size">' + it.size + '</div>' +
+      '<div class="price">' + won(it.price) + '</div>' +
+      '<button type="button" class="btn" data-id="' + it.id + '"></button></div></article>';
+  }).join("");
+  refresh();
+}
+function refresh() {
+  var count = 0, total = 0;
+  items.forEach(function (it) { var q = cart[it.id] || 0; count += q; total += q * it.price; });
+  document.getElementById("total").textContent = won(total);
+  var co = document.getElementById("checkout");
+  co.textContent = "Finalizar (" + count + ")";
+  co.disabled = count === 0;
+  document.querySelectorAll(".btn").forEach(function (b) {
+    var q = cart[b.dataset.id] || 0;
+    b.textContent = q ? "No carrinho · " + q : "Adicionar";
+    b.classList.toggle("added", q > 0);
+  });
+  return total;
+}
+
+document.getElementById("chips").addEventListener("click", function (e) {
+  var b = e.target.closest(".chip"); if (!b) return;
+  state.cat = b.dataset.cat; renderChips(); renderGrid();
+});
+document.getElementById("enter").addEventListener("click", function () {
+  document.getElementById("chips").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+document.getElementById("grid").addEventListener("click", function (e) {
+  var b = e.target.closest(".btn"); if (!b) return;
+  cart[b.dataset.id] = (cart[b.dataset.id] || 0) + 1; refresh();
+});
+var orderText = "";
+document.getElementById("checkout").addEventListener("click", function () {
+  var total = refresh();
+  var chosen = items.filter(function (it) { return cart[it.id]; });
+  document.getElementById("lines").innerHTML = chosen.map(function (it) {
+    return '<div class="oi"><b>' + it.kr + '</b><span class="amt">' + won(cart[it.id] * it.price) + '</span>' +
+      '<span class="d">' + it.pt + ' · ' + it.size + ' · cód. ' + it.code + ' · ' + cart[it.id] + ' × ' + won(it.price) + '</span></div>';
+  }).join("");
+  document.getElementById("sheet-total").textContent = won(total);
+  orderText = "Olá, tenho interesse em finalizar a compra dos itens abaixo:\n\n" + chosen.map(function (it) {
+    return cart[it.id] + "× " + it.kr + " (" + it.pt + ", " + it.size + ", cód. " + it.code + ") — " + won(cart[it.id] * it.price);
+  }).join("\n") + "\n\nTotal: " + won(total);
+  document.getElementById("copy").textContent = "Copiar pedido";
+  document.getElementById("sheet").hidden = false;
+  document.querySelector(".sheet-card").scrollTop = 0;
+});
+document.getElementById("copy").addEventListener("click", function () {
+  var btn = this;
+  function done(ok) { btn.textContent = ok ? "Pedido copiado" : "Selecione e copie o e-mail acima"; }
+  try {
+    navigator.clipboard.writeText(orderText).then(function () { done(true); }, function () { done(false); });
+  } catch (e) { done(false); }
+});
+document.getElementById("close").addEventListener("click", function () {
+  document.getElementById("sheet").hidden = true;
+});
+renderChips(); renderGrid();
+</script>
+
+</body></html>
